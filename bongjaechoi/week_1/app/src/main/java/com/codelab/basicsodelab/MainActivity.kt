@@ -3,6 +3,9 @@ package com.codelab.basicsodelab
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -55,21 +58,26 @@ fun Greeting(name: String) {
         color = MaterialTheme.colors.primary,
         modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
     ) {
-        val expanded = remember { mutableStateOf(false) }
+        var expanded by remember { mutableStateOf(false) }
 
-        val extraPadding = if (expanded.value) 48.dp else 0.dp
-
+        val extraPadding by animateDpAsState(
+            if (expanded) 48.dp else 0.dp,
+            animationSpec = spring(
+                dampingRatio = Spring.DampingRatioMediumBouncy,
+                stiffness = Spring.StiffnessLow
+            )
+        )
         Row(modifier = Modifier.padding(24.dp)) {
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(extraPadding)
+                    .padding(extraPadding.coerceAtLeast(0.dp))
             ) {
                 Text(text = "Hello,")
                 Text(text = "$name!")
             }
-            OutlinedButton(onClick = { expanded.value = !expanded.value }) {
-                Text(text = if (expanded.value) "Show More" else "Show Less")
+            OutlinedButton(onClick = { expanded = !expanded }) {
+                Text(text = if (expanded) "Show More" else "Show Less")
 
             }
         }
