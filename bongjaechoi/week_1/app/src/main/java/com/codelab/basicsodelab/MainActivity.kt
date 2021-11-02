@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun MyApp(names: List<String> = listOf("World", "Compose")) {
+private fun MyApp(names: List<String> = listOf("world","Compose")) {
     Surface(color = MaterialTheme.colors.background) {
         Column {
             for (name in names) {
@@ -50,8 +50,10 @@ fun Greeting(name: String) {
     ) {
         val expanded = remember { mutableStateOf(false) }
 
+        val extraPadding = if(expanded.value) 48.dp else 0.dp
+
         Row(modifier = Modifier.padding(24.dp)) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column(modifier = Modifier.weight(1f).padding(extraPadding)) {
                 Text(text = "Hello,")
                 Text(text = "$name!")
             }
