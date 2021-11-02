@@ -3,6 +3,8 @@ package com.codelab.basicsodelab
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
@@ -52,6 +54,7 @@ private fun Greetings(names: List<String> = List(1000) { "BJ! $it" }) {
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun Greeting(name: String) {
     Surface(
@@ -67,6 +70,7 @@ fun Greeting(name: String) {
                 stiffness = Spring.StiffnessLow
             )
         )
+
         Row(modifier = Modifier.padding(24.dp)) {
             Column(
                 modifier = Modifier
@@ -75,6 +79,9 @@ fun Greeting(name: String) {
             ) {
                 Text(text = "Hello,")
                 Text(text = "$name!")
+                AnimatedVisibility(visible = !expanded) {
+                    Text(text = "Edit")
+                }
             }
             OutlinedButton(onClick = { expanded = !expanded }) {
                 Text(text = if (expanded) "Show More" else "Show Less")
