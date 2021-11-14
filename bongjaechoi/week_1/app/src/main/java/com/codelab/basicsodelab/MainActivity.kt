@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,7 +47,7 @@ private fun MyApp() {
 }
 
 @Composable
-private fun Greetings(names: List<String> = List(1000) { "BJ! $it" }) {
+private fun Greetings(names: List<String> = List(500) { "BJ! $it" }) {
     LazyColumn(modifier = Modifier.padding(vertical = 4.dp)) {
         items(items = names) { name ->
             Greeting(name = name)
@@ -61,7 +62,7 @@ fun Greeting(name: String) {
         color = MaterialTheme.colors.primary,
         modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
     ) {
-        var expanded by remember { mutableStateOf(false) }
+        var expanded by rememberSaveable { mutableStateOf(false) }
 
         val extraPadding by animateDpAsState(
             if (expanded) 48.dp else 0.dp,
@@ -78,7 +79,7 @@ fun Greeting(name: String) {
                     .padding(extraPadding.coerceAtLeast(0.dp))
             ) {
                 Text(text = "Hello,")
-                Text(text = "$name!")
+                Text(text = "$name!", style = MaterialTheme.typography.h4)
                 AnimatedVisibility(visible = !expanded) {
                     Text(text = "Edit")
                 }
