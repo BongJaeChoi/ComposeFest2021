@@ -58,9 +58,19 @@ private fun Greetings(names: List<String> = List(500) { "$it" }) {
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun Greeting(name: String) {
+    Card(
+        backgroundColor = MaterialTheme.colors.primary,
+        modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp),
+    ) {
+        CardContent(name = name)
+    }
+}
+
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+fun CardContent(name: String) {
     Surface(
         color = MaterialTheme.colors.primary,
         modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
