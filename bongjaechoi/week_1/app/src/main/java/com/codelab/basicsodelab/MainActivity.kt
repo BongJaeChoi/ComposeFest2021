@@ -6,9 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -80,16 +78,16 @@ fun Greeting(name: String) {
             modifier = Modifier
                 .padding(12.dp)
                 .animateContentSize(
-                    animationSpec = spring(
-                        dampingRatio = Spring.DampingRatioMediumBouncy,
-                        stiffness = Spring.StiffnessLow
+                    animationSpec = tween(
+                        durationMillis = 700,
+                        easing = FastOutSlowInEasing
                     )
                 )
         ) {
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(extraPadding.coerceAtLeast(0.dp))
+                    .padding(8.dp)
             ) {
                 Text(text = "Hello,")
                 Text(text = name, style = MaterialTheme.typography.h3)
